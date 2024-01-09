@@ -17,9 +17,9 @@ export async function createUserAccount(user: INewUser) {
         const newUser = await saveUserToDB({
             accountId: newAccount.$id,
             name: newAccount.name,
-            email: newAccount.email,
             username: user.username,
-            imagerUrl: avatarUrl,
+            email: newAccount.email,
+            imageUrl: avatarUrl,
         });
 
         return newUser;
@@ -31,10 +31,10 @@ export async function createUserAccount(user: INewUser) {
 
 export async function saveUserToDB(user: {
     accountId: string;
-    email: string;
     name: string;
-    imagerUrl: URL;
+    email: string;
     username?: string;
+    imageUrl: URL;
 }) {
     try {
         // similar to: "const newUser (or some variable name by choice) = await databases etc"
@@ -50,8 +50,7 @@ export async function saveUserToDB(user: {
 
 export async function signInAccount(user: {email: string, password: string}) {
     try {
-        const session = account.createEmailSession(user.email, user.password);
-        return session;
+        return account.createEmailSession(user.email, user.password);
     } catch (error) {
         console.log(error);
     }

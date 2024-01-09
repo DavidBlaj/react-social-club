@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 
-2.0
+3.0
 
 I want to add the user in a session when creating the user. For this, apparently i have to use TanStack Querry(ReactQuerry)
 What ReactQuerry does is it helps me for example to "Cache the data i am fetching from the server", "Auto refetching", "Infinite Scroll" etc
@@ -39,11 +39,12 @@ In main.tsx trebuie sa pun app in context-ul <AuthProvider>
 Adaug QueryProvider.tsx
 
 !Error
-isCreatingUser is not defined
+isCreatingAccount is not defined
 este vorba despre isLoading din useCreatUserAccountMutation
 Pare sa fie ceva problema cu versiunea tanstack.
 In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
 
 
+3.1 Fixed imageUrl missing attribute error
 
 

@@ -136,9 +136,9 @@ const SignUpForm = () => {
                         {
                             isCreatingAccount || isSigningInUser || isUserLoading ? (
                                 <div className="flex-center gap-2">
-                                    <Loader/>
+                                    <Loader/> Loading...
                                 </div>
-                            ) : "Sign up"
+                            ) : ("Sign up")
                         }
                     </Button>
                     <p className="text-small-regular text-light-2 text-center mt-2">

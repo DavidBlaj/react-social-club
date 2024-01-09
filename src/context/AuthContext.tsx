@@ -18,10 +18,8 @@ const INITIAL_STATE = {
     user: INITIAL_USER,
     loading: false,
     isAuthenticated: false,
-    setUser: () => {
-    },
-    setIsAuthenticated: () => {
-    },
+    setUser: () => {},
+    setIsAuthenticated: () => {},
     checkAuthUser: async () => false as boolean
 };
 
@@ -47,7 +45,6 @@ const AuthProvider = ({children}: { children: React.ReactNode }) => {
                     imageUrl: currentAccount.imageUrl,
                     bio: currentAccount.bio
                 })
-
                 setIsAuthenticated(true);
 
                 return true;
