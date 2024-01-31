@@ -18,8 +18,10 @@ const INITIAL_STATE = {
     user: INITIAL_USER,
     loading: false,
     isAuthenticated: false,
-    setUser: () => {},
-    setIsAuthenticated: () => {},
+    setUser: () => {
+    },
+    setIsAuthenticated: () => {
+    },
     checkAuthUser: async () => false as boolean
 };
 
@@ -63,9 +65,9 @@ const AuthProvider = ({children}: { children: React.ReactNode }) => {
     // the empty dependency array means that this is going to be called
     // only when the app reloads
     useEffect(() => {
-        // localStorage.getItem('cookieFallback') === null
         if (
-            localStorage.getItem('cookieFallback') === '[]'
+            localStorage.getItem('cookieFallback') === '[]' ||
+            localStorage.getItem('cookieFallback') === null
         ) navigate('/sign-in')
 
         checkAuthUser();

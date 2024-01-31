@@ -10,7 +10,7 @@ at first i add a react-querry folder in the lib folder.
     - here i create querriesAndMutations
 
 Look at the createUserAccount method call in SignUpForm.tsx, it's basically not going to communicate directly to appwrite,
-but through reactQuerry. Notice how createUserAccount is in fact the mutateAsync function of useCreatUserAccountMutation().
+but through reactQuerry. Notice how createUserAccount is in fact the mutateAsync function of useCreateUserAccountMutation().
 So, basically, the mutation is calling createUserAccount from Appwrite for me.
 It is a level in between my Frontend and Appwrite, to ensure:
     - easier fetching data on React
@@ -36,7 +36,9 @@ trebe sa creez provider si pentru query nu numai pentru context.
 
 In main.tsx trebuie sa pun app in context-ul <AuthProvider>
 
-Adaug QueryProvider.tsx
+Adaug QueryProvider.tsx. QueryClient il folosesc pentru a interactiona cu un cache.
+are printre altele si metoda useQueryClient, regasita si in fisierul querriesAndMutations.ts, metoda 
+pe care inca eu nu o folosesc
 
 !Error
 isCreatingAccount is not defined
@@ -46,5 +48,8 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
 
 
 3.1 Fixed imageUrl missing attribute error
+- it was just a small typo in the name imageUrl... mind those small typos, it can save you like two days
 
-
+4. Added the Sign in option
+    - added a new validation type in zod index file
+    - created the SignInForm.tsx
