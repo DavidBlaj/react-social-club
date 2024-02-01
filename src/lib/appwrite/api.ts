@@ -76,3 +76,12 @@ export async function getCurrentUser() {
         console.log(error);
     }
 }
+
+export async function signOutAccount() {
+    try {
+        // this is provided by appwrite, and it allows me to delete the session and return the session
+        return await account.deleteSession("current ");
+    } catch (error) {
+        console.log(error)
+    }
+}

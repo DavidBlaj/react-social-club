@@ -53,3 +53,16 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
 4. Added the Sign in option
     - added a new validation type in zod index file
     - created the SignInForm.tsx
+
+5 - We go on with building our app first by designing our Homepage(under _root/pages).
+    - we add at first a TopBar, a LeftSidebar, and a bottomSideBar component(inside components' folder)
+      and render them inside RootLayout.
+    - we also added an <Outlet /> inside the RootLayout. To see how that works check the documentation or AuthLayout.
+    - I then start designing the Topbar
+        - here I have to design and implement the signOut button. At first, I have to create a method inside
+          queriesAndMutations called useSignOutAccount. In here I call a method that I am going to create right now called
+          signOutAccount that it's coming from appwrite(api.ts)
+        - then in the Topbar I have to define this newly created mutation
+    - inside LeftSidebar instead or manually introducing multiple links(below the profile link),
+      I create the constants folder...
+    - I will also use the useLocation hook to find on which route I am currently
