@@ -83,18 +83,6 @@ const PostForm = ({post}) => {
                            )}
                 />
                 <FormField control={form.control}
-                           name="location"
-                           render={({field}) => (
-                               <FormItem>
-                                   <FormLabel className="shad-form_label">Add Location</FormLabel>
-                                   <FormControl>
-                                       <Input type="text" className="shad-input"/>
-                                   </FormControl>
-                                   <FormMessage className="shad-form_message"/>
-                               </FormItem>
-                           )}
-                />
-                <FormField control={form.control}
                            name="tags"
                            render={({ field }) => (
                                <FormItem>
