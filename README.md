@@ -87,3 +87,6 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
 The FileUploader:
 - maybe the most important component of my app
 - i will use a package called: react dropzone(npm install react-dropzone)
+
+10 Add validation for the fields inside the PostForm(see PostValidation). Correct some warnings and errors.
+    
