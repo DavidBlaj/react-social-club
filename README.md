@@ -69,3 +69,5 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
 
 6  I start by adding Routes to the private routes section in the App.tsx file
     Then I go to the pages folder and I add all the pages and then export them using index.ts
+
+7 I start designing the bottom bar(which is actually the LeftSidebar but on mobile)
