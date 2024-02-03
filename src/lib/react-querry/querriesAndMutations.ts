@@ -1,11 +1,11 @@
 import {
-    useQuery,
     useMutation,
     useQueryClient,
-    useInfiniteQuery,
+
 } from '@tanstack/react-query';
-import {INewUser} from "@/types";
-import {createUserAccount, signInAccount, signOutAccount} from "@/lib/appwrite/api";
+import {INewPost, INewUser} from "@/types";
+import {createPost, createUserAccount, signInAccount, signOutAccount} from "@/lib/appwrite/api";
+import {QUERY_KEYS} from "@/lib/react-querry/queryKeys";
 
 /**
  * Unlike queries, 'mutations' are typically used to create/update/delete data or perform server side-effects.
@@ -31,4 +31,26 @@ export const useSignOutAccountMutation = () => {
         // or rather just a function declaration.
         mutationFn: signOutAccount
     })
+}
+
+
+// =================================================
+// POST QUERIES
+// ================================================
+
+
+export const useCreatePostMutation = () => {
+    // Once I create a post I want to query all existing posts, so that I can show them on the Homepage
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (post: INewPost) => createPost(post),
+        onSuccess: () => {
+            // I invalidate the queries so that React query is going to try and get the data from the server
+            // and not from cache
+            // Creating a separate file or the query keys is a pro-tip. It avoids spelling errors.
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+            })
+        }
+    });
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import * as z from "zod";
+import { useNavigate } from 'react-router-dom';
 
 import {Button} from "@/components/ui/button";
 import {
@@ -18,6 +19,9 @@ import {Textarea} from "@/components/ui/textarea";
 import FileUploader from "@/components/shared/FileUploader";
 import {PostValidation} from "@/lib/validation";
 import {Models} from "appwrite";
+import {useUserContext} from "@/context/AuthContext";
+import {useToast} from "@/components/ui/use-toast";
+import {useCreatePostMutation} from "@/lib/react-querry/querriesAndMutations";
 
 type PostFormProps = {
     post?: Models.Document
@@ -27,6 +31,10 @@ type PostFormProps = {
 // post is 'props'
 // we only use post as 'props' if updating the post
 const PostForm = ({post}: PostFormProps) => {
+    const {mutateAsync: createPost, isPending: isLoadingCreate} = useCreatePostMutation();
+    const {user} = useUserContext();
+    const {toast} = useToast()
+    const navigate = useNavigate();
     // 1. Define my form
     const form = useForm<z.infer<typeof PostValidation>>({
         resolver: zodResolver(PostValidation),
@@ -39,8 +47,16 @@ const PostForm = ({post}: PostFormProps) => {
     });
 
     // 2. Define a submit handler
-    function onSubmit(values: z.infer<typeof PostValidation>) {
-        console.log(values);
+    // must be async because I am using 'await' action of createPost
+    async function onSubmit(values: z.infer<typeof PostValidation>) {
+        const newPost = await createPost({
+            ...values,
+            userId: user.id,
+        })
+        if(!newPost) {
+            toast({title: 'Please try again'})
+        }
+        navigate('/');
     }
 
     return (

@@ -74,7 +74,7 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
 
 8   The next step now is to start designing the CreatePost.tsx page, in order to be able to show sth on
     our feed.
-- the CreatePost contains basically a _**form**_ with a couple of fields: catption, photos, location and tags
+- the CreatePost contains basically a _**form**_ with a couple of fields: caption, photos, location and tags
 - i add a new folder called 'forms' inside the 'components' folder
 - here I add a new file called PostForm.tsx. It is basically a reusable component
 - I start by creating a new form using the template from shadcn
@@ -88,5 +88,26 @@ The FileUploader:
 - maybe the most important component of my app
 - i will use a package called: react dropzone(npm install react-dropzone)
 
-10 Add validation for the fields inside the PostForm(see PostValidation). Correct some warnings and errors.
+9.2 Add validation for the fields inside the PostForm(see PostValidation). Correct some warnings and errors.
+   
+10 Implement the onSubmit method on PostForm.tsx
+    - connect with appwrite and create a post based on the values from PostForm.
+    - Inside Media in appwrite in the settings section I have to add a new role with CRUD permissions for a certain
+      user of my choice
     
+    - I added 4 new methods to my api: createPost(), uploadFile(), getFilePreview() and deleteFile()
+    - Here i do a step by step check on each of the file and tags fields. I just want to make sure that everything is
+      double checked before submitting anything. This is a very good practice.
+
+    Inside queriesAndMutations.tsx
+    - After i create a new post i want to query all the existing posts.
+    - for this I create the queryClient
+    - inside invalidateQueries i have to pass the filters based off of which I want to invalidate the query
+    - Why do i need to invalidate it?
+        - That's the advantage of React query; it allows me to fetch new fresh data, and not let the data go stale.
+          So, the next time i try to get recent posts, it actually invalidates GET_RECENT_POSTS. And this means that
+          I am not taking recent posts from cache rather it will call it again from server.
+
+    Next i create queryKeys so i can safely keep all keys in one place and avoid misspelling.
+    Error: There was an issue with the getFilePreview method from the api. I made async by mistake and that caused my   
+           form to automatically submit when I pressed on Select file or drag and drop.
