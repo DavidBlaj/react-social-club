@@ -66,3 +66,6 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
     - inside LeftSidebar instead or manually introducing multiple links(below the profile link),
       I create the constants folder...
     - I will also use the useLocation hook to find on which route I am currently
+
+6  I start by adding Routes to the private routes section in the App.tsx file
+    Then I go to the pages folder and I add all the pages and then export them using index.ts
