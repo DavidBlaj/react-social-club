@@ -82,3 +82,8 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
 - Second form field is going to be the file uploader, created in the next commit
 - Third is a text input
 - Fourth is another text input
+
+9
+The FileUploader:
+- maybe the most important component of my app
+- i will use a package called: react dropzone(npm install react-dropzone)

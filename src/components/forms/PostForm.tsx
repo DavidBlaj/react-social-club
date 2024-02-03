@@ -15,6 +15,7 @@ import {
 
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
+import FileUploader from "@/components/shared/FileUploader";
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -24,7 +25,7 @@ const formSchema = z.object({
 
 // post is 'props'
 // we only use post as 'props' if updating the post
-const PostForm = () => {
+const PostForm = ({post}) => {
     // 1. Define my form
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -54,7 +55,21 @@ const PostForm = () => {
                                </FormItem>
                            )}
                 />
-                {/*This is the place for the future FileUploader*/}
+                <FormField control={form.control}
+                           name="file"
+                           render={({field}) => (
+                               <FormItem>
+                                   <FormLabel className="shad-form_label">Add Photos</FormLabel>
+                                   <FormControl>
+                                       <FileUploader
+                                           fieldChange={field.onChange}
+                                           mediaUrl={post?.imageUrl}
+                                       />
+                                   </FormControl>
+                                   <FormMessage className="shad-form_message"/>
+                               </FormItem>
+                           )}
+                />
                 <FormField control={form.control}
                            name="location"
                            render={({field}) => (
