@@ -71,3 +71,14 @@ In final este vorba de faptul ca trebuie sa schimb isLoading -> isPending
     Then I go to the pages folder and I add all the pages and then export them using index.ts
 
 7 I start designing the bottom bar(which is actually the LeftSidebar but on mobile)
+
+8   The next step now is to start designing the CreatePost.tsx page, in order to be able to show sth on
+    our feed.
+- the CreatePost contains basically a _**form**_ with a couple of fields: catption, photos, location and tags
+- i add a new folder called 'forms' inside the 'components' folder
+- here I add a new file called PostForm.tsx. It is basically a reusable component
+- I start by creating a new form using the template from shadcn
+- I have to install TextArea by terminal using the command: npx shadcn-ui@latest add textarea
+- Second form field is going to be the file uploader, created in the next commit
+- Third is a text input
+- Fourth is another text input
