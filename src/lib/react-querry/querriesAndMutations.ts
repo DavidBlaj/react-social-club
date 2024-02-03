@@ -1,10 +1,10 @@
 import {
-    useMutation,
+    useMutation, useQuery,
     useQueryClient,
 
 } from '@tanstack/react-query';
 import {INewPost, INewUser} from "@/types";
-import {createPost, createUserAccount, signInAccount, signOutAccount} from "@/lib/appwrite/api";
+import {createPost, createUserAccount, getRecentPosts, signInAccount, signOutAccount} from "@/lib/appwrite/api";
 import {QUERY_KEYS} from "@/lib/react-querry/queryKeys";
 
 /**
@@ -53,4 +53,13 @@ export const useCreatePostMutation = () => {
             })
         }
     });
+}
+
+// queryFn is a function that executes something when I try to fetch the posts.
+export const useGetRecentPostsMutation = () => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+        queryFn: getRecentPosts,
+
+    })
 }

@@ -42,7 +42,7 @@ const Topbar = () => {
                     <Link to={`/profile/${user.id}`} className="flex-center gap-3">
                         {/* rounded-full -  allows to round the image really easily*/}
                         <img
-                            src={user.imageUrl || '/assets/images/profile-placeholder.svg'}
+                            src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
                             alt="profile"
 
                             className="h-8 w-8 rounded-full"

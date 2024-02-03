@@ -111,3 +111,14 @@ The FileUploader:
     Next i create queryKeys so i can safely keep all keys in one place and avoid misspelling.
     Error: There was an issue with the getFilePreview method from the api. I made async by mistake and that caused my   
            form to automatically submit when I pressed on Select file or drag and drop.
+
+
+11. Start designing Home page
+
+    - I want at first to fetch the posts. I add a new method 
+      inside queriesAndMutations called: useGetRecentPostsMutation
+    - I then create a PostCard component to recursively and nicely display all posts.
+        - When displaying the creation date of the post, I have to add some functionality inside utils.ts
+        - I then create a new component that is going to be displayed inside PostCard called PostStats. It is going to
+        show the likes and save.
+        - For now I designed the cards and in the next commit I will start implementing the required functionality. 
