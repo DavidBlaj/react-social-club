@@ -94,8 +94,8 @@ The FileUploader:
     - connect with appwrite and create a post based on the values from PostForm.
     - Inside Media in appwrite in the settings section I have to add a new role with CRUD permissions for a certain
       user of my choice
-    
-    - I added 4 new methods to my api: createPost(), uploadFile(), getFilePreview() and deleteFile()
+-
+   I added 4 new methods to my api: createPost(), uploadFile(), getFilePreview() and deleteFile()
     - Here i do a step by step check on each of the file and tags fields. I just want to make sure that everything is
       double checked before submitting anything. This is a very good practice.
 
@@ -121,4 +121,18 @@ The FileUploader:
         - When displaying the creation date of the post, I have to add some functionality inside utils.ts
         - I then create a new component that is going to be displayed inside PostCard called PostStats. It is going to
         show the likes and save.
-        - For now I designed the cards and in the next commit I will start implementing the required functionality. 
+        - For now, I designed the cards and in the next commit I will start implementing the required functionality. 
+
+12. PostCard - functionalities
+        - I start by adding the 'likePost', 'savePost' and 'deleteSavedPost' methods inside the api.ts
+        - Then I create mutations for all 3 methods inside querriesAndMutations file.
+                - What I do inside each of these methods is updating different things on my page such as: recent posts, 
+                  or get new posts, or make sure we are still authenticated.
+        - The next step is to go inside 'PostStats.tsx' and start implementing these methods to manipulate the UI.
+        For the 'like' part:
+               - get the likes list
+               - create a handleLikedPost method for the click event of the like icon
+               - change the like button color if it was liked by the current user 
+        For the 'savePost' part:
+                   - At first I search inside the saves array of each user and check if the post i am trying to save is
+                     already saved, and if it's not, I save it.

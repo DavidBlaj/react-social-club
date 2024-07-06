@@ -4,13 +4,13 @@ import {INewPost, INewUser} from "@/types";
 
 export async function createUserAccount(user: INewUser) {
     try {
-        const newAccount =  await account.create(
+        const newAccount = await account.create(
             ID.unique(),
             user.email,
             user.password,
             user.name
         );
-        if(!newAccount) throw Error;
+        if (!newAccount) throw Error;
 
         const avatarUrl = avatars.getInitials(user.name);
 
@@ -43,12 +43,12 @@ export async function saveUserToDB(user: {
             appwriteConfig.userCollectionId,
             ID.unique(),
             user);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
     }
 }
 
-export async function signInAccount(user: {email: string, password: string}) {
+export async function signInAccount(user: { email: string, password: string }) {
     try {
         return account.createEmailSession(user.email, user.password);
     } catch (error) {
@@ -60,7 +60,7 @@ export async function getCurrentUser() {
     try {
         const currentAccount = await account.get();
 
-        if(!currentAccount) throw Error;
+        if (!currentAccount) throw Error;
 
         const currentUser = await databases.listDocuments(
             appwriteConfig.databaseId,
@@ -68,7 +68,7 @@ export async function getCurrentUser() {
             [Query.equal('accountId', currentAccount.$id)]
         );
 
-        if(!currentUser) throw Error;
+        if (!currentUser) throw Error;
 
         return currentUser.documents[0];
 
@@ -97,12 +97,12 @@ export async function createPost(post: INewPost) {
         // Upload image to appwrite storage
         const uploadedFile = await uploadFile(post.file[0]);
 
-        if(!uploadedFile) throw Error;
+        if (!uploadedFile) throw Error;
 
         // Get the file url
         const fileUrl = getFilePreview(uploadedFile.$id);
 
-        if(!fileUrl) {
+        if (!fileUrl) {
             await deleteFile(uploadedFile.$id);
             throw Error;
         }
@@ -127,7 +127,7 @@ export async function createPost(post: INewPost) {
             }
         )
 
-        if(!newPost) {
+        if (!newPost) {
             await deleteFile(uploadedFile.$id);
             throw Error;
         }
@@ -139,13 +139,13 @@ export async function createPost(post: INewPost) {
 
 export async function uploadFile(file: File) {
     try {
-        const uploadedFile =  await storage.createFile(
+        const uploadedFile = await storage.createFile(
             appwriteConfig.storageId,
             ID.unique(),
             file
         );
         return uploadedFile;
-    } catch(error) {
+    } catch (error) {
         console.log(error);
     }
 }
@@ -185,7 +185,61 @@ export async function getRecentPosts() {
         [Query.orderDesc('$createdAt'), Query.limit(20)]
     );
 
-    if(!posts) throw Error;
+    if (!posts) throw Error;
 
     return posts;
+}
+
+export async function likePost(postId: string, likesArray: string[]) {
+    try {
+        const updatedPost = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            postId,
+            {
+                likes: likesArray
+            }
+        )
+        if (!updatedPost) throw Error;
+
+        return updatedPost;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function savePost(postId: string, userId: string) {
+    try {
+        const updatedPost = await databases.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.saveCollectionId,
+            ID.unique(),
+            {
+                user: userId,
+                post: postId,
+            }
+        )
+
+        if (!updatedPost) throw Error;
+
+        return updatedPost;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function deleteSavedPost(savedRecordId: string) {
+    try {
+        const statusCode = await databases.deleteDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.saveCollectionId,
+            savedRecordId,
+        )
+
+        if (!statusCode) throw Error;
+
+        return {status: 'ok'};
+    } catch (e) {
+        console.log(e);
+    }
 }
