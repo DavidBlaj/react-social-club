@@ -136,3 +136,8 @@ The FileUploader:
         For the 'savePost' part:
                    - At first I search inside the saves array of each user and check if the post i am trying to save is
                      already saved, and if it's not, I save it.
+
+13. Edit Post
+        - add 'updatePost', 'getPostById', and 'deletePost' methods inside api.tsx and querriesAndMutations.tsx
+        - Then, inside PostForm.tsx I have to add an action type for both create and update
+        - Inside FileUploader.tsx, I have to pass 'mediaUrl' as a param to the state.

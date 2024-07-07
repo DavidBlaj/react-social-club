@@ -30,8 +30,6 @@ const PostStats = ({post, userId}: PostStatsProps) => {
     // here, the 'save' comes from the saves array of each user. You can find this as a db field.
     const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.post.$id === post.$id);
 
-    console.log(savedPostRecord);
-
     useEffect(() => {
         // this: !! is automatic boolean assignment
         setIsSaved(!!savedPostRecord)

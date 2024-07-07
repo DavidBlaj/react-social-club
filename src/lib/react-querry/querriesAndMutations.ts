@@ -3,18 +3,16 @@ import {
     useQueryClient,
 
 } from '@tanstack/react-query';
-import {INewPost, INewUser} from "@/types";
+import {INewPost, INewUser, IUpdatePost} from "@/types";
 import {
     createPost,
-    createUserAccount, deleteSavedPost, getCurrentUser,
+    createUserAccount, deletePost, deleteSavedPost, getCurrentUser, getPostById,
     getRecentPosts,
     likePost, savePost,
     signInAccount,
-    signOutAccount
+    signOutAccount, updatePost
 } from "@/lib/appwrite/api";
 import {QUERY_KEYS} from "@/lib/react-querry/queryKeys";
-import {data} from "autoprefixer";
-import saved from "@/_root/pages/Saved";
 
 /**
  * Unlike queries, 'mutations' are typically used to create/update/delete data or perform server side-effects.
@@ -140,3 +138,46 @@ export const useGetCurrentUser = () => {
         queryFn: getCurrentUser
     })
 }
+
+export const useGetPostById = (postId: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
+        queryFn: () => getPostById(postId),
+        // what I do here with the 'enabled' property is that I only fetch the post data when the postId changes.
+        // For instance, if I only reload the page, it's not going to fetch it again because it will cache it before.
+        enabled: !!postId
+    })
+}
+
+export const useUpdatePost = () => {
+    console.log("here")
+    const queryClient = useQueryClient();
+
+    // here, 'useMutation' is used instead of 'useQuery' because we are mutating data, not fetching it.
+    return useMutation({
+        mutationFn: (post: IUpdatePost) => updatePost(post),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id]
+            })
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+            })
+        }
+    })
+}
+
+export const useDeletePost = () => {
+    const queryClient = useQueryClient();
+
+    // here, 'useMutation' is used instead of 'useQuery' because we are mutating data, not fetching it.
+    return useMutation({
+        mutationFn: ({postId, imageId}: {postId:string, imageId: string}) => deletePost(postId, imageId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+            })
+        }
+    })
+}
+
