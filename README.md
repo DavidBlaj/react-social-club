@@ -141,3 +141,7 @@ The FileUploader:
         - add 'updatePost', 'getPostById', and 'deletePost' methods inside api.tsx and querriesAndMutations.tsx
         - Then, inside PostForm.tsx I have to add an action type for both create and update
         - Inside FileUploader.tsx, I have to pass 'mediaUrl' as a param to the state.
+
+14. Post Details Page
+
+4.58 la <hr />

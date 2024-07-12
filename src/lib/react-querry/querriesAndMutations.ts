@@ -118,15 +118,15 @@ export const useDeleteSavedPost = () => {
     // here we do an update every time we open different pages
     return useMutation({
         mutationFn: (savedRecordId: string) => deleteSavedPost(savedRecordId),
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.GET_RECENT_POSTS, data?.$id]
+                queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
             })
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.GET_POSTS, data?.$id]
+                queryKey: [QUERY_KEYS.GET_POSTS]
             })
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.GET_CURRENT_USER, data?.$id]
+                queryKey: [QUERY_KEYS.GET_CURRENT_USER]
             })
         }
     })
@@ -158,10 +158,8 @@ export const useUpdatePost = () => {
         mutationFn: (post: IUpdatePost) => updatePost(post),
         onSuccess: (data) => {
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id]
-            })
-            queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+                queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
+
             })
         }
     })
