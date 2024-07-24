@@ -151,7 +151,6 @@ export const useGetPostById = (postId: string) => {
 }
 
 export const useUpdatePost = () => {
-    console.log("here")
     const queryClient = useQueryClient();
 
     // here, 'useMutation' is used instead of 'useQuery' because we are mutating data, not fetching it.
@@ -199,8 +198,9 @@ export const useGetInfinitePosts = () => {
 
 export const useSearchPosts = (searchTerm: string) => {
     return useQuery({
-        queryKey: [QUERY_KEYS.SEARCH_POSTS],
-        queryFn: () => {searchPosts(searchTerm)},
+        // here I validate the query again once the searchTerm changes by adding a second prop to the queryKey
+        queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
+        queryFn: () => searchPosts(searchTerm),
         // Automatically re-fetch when the search term changes
         enabled: !!searchTerm
     })
