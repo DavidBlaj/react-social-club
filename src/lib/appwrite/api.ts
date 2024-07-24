@@ -268,20 +268,20 @@ export async function updatePost(post: IUpdatePost) {
             imageId: post.imageId
         }
 
-        if(hasFileToUpdate) {
+        if (hasFileToUpdate) {
             // Upload image to storage.
             const uploadedFile = await uploadFile(post.file[0]);
-            if(!uploadedFile) throw Error;
+            if (!uploadedFile) throw Error;
 
             // Get file url
             const fileUrl = getFilePreview(uploadedFile.$id);
 
-            if(!fileUrl) {
+            if (!fileUrl) {
                 deleteFile(uploadedFile.$id);
                 throw Error;
             }
 
-            image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id}
+            image = {...image, imageUrl: fileUrl, imageId: uploadedFile.$id}
         }
 
         // convert tags into an array
@@ -301,7 +301,7 @@ export async function updatePost(post: IUpdatePost) {
             }
         );
 
-        if(!updatedPost) {
+        if (!updatedPost) {
             await deleteFile(post.imageId);
             throw Error;
         }
@@ -314,7 +314,7 @@ export async function updatePost(post: IUpdatePost) {
 }
 
 export async function deletePost(postId: string, imageId: string) {
-    if(!postId || !imageId) throw Error;
+    if (!postId || !imageId) throw Error;
     try {
         await databases.deleteDocument(
             appwriteConfig.databaseId,
@@ -322,8 +322,50 @@ export async function deletePost(postId: string, imageId: string) {
             postId
         )
 
-        return { status: 'ok'}
+        return {status: 'ok'}
     } catch (e) {
         console.log(e);
     }
+}
+
+export async function getInfinitePosts({pageParam}: { pageParam: number }) {
+    const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(10)];
+
+    if (pageParam) {
+        // pageParam = number of pages or documents that I want to skip
+        // if I am on page 2, skip the first ten posts and give me the next 10 posts
+        queries.push(Query.cursorAfter(pageParam.toString()));
+    }
+
+    try {
+        const posts = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            queries
+        )
+
+        if (!posts) throw Error;
+
+        return posts;
+    } catch (e) {
+        console.log(e);
+    }
+
+}
+
+export async function searchPosts(searchTerm: string) {
+    try {
+        const posts = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            [Query.search('caption', searchTerm)]
+        )
+
+        if (!posts) throw Error;
+
+        return posts;
+    } catch (e) {
+        console.log(e);
+    }
+
 }

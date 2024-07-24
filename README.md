@@ -119,7 +119,7 @@ The FileUploader:
       inside queriesAndMutations called: useGetRecentPostsMutation
     - I then create a PostCard component to recursively and nicely display all posts.
         - When displaying the creation date of the post, I have to add some functionality inside utils.ts
-        - I then create a new component that is going to be displayed inside PostCard called PostStats. It is going to
+        - I then create a new component that is going to be displayed inside PostCard called PostStam. It is going to
         show the likes and save.
         - For now, I designed the cards and in the next commit I will start implementing the required functionality. 
 
@@ -143,5 +143,11 @@ The FileUploader:
         - Inside FileUploader.tsx, I have to pass 'mediaUrl' as a param to the state.
 
 14. Post Details Page
+        - designed and implemented the simple PostDetailsPage
 
-4.58 la <hr />
+15. Explore page
+        - search
+        - infinite scroll
+        1. Design Explore page
+            - added 2 methods to api, and react-query: searchPosts, and getInfinitePosts
+            - added 2 new components: GridPostList.tsx and SearchResults.tsx.
