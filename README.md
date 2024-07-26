@@ -145,15 +145,20 @@ The FileUploader:
 14. Post Details Page
         - designed and implemented the simple PostDetailsPage
 
-15. Explore page
-        - search
-        - infinite scroll
-        1. Design Explore page
-            - added 2 methods to api, and react-query: searchPosts, and getInfinitePosts
-            - added 2 new components: GridPostList.tsx and SearchResults.tsx.
+    15. Explore page
+            - search
+            - infinite scroll
+            1. Design Explore page
+                - added 2 methods to api, and react-query: searchPosts, and getInfinitePosts
+                - added 2 new components: GridPostList.tsx and SearchResults.tsx.
 
-        2. Implement Grid List and search functionality to explore page
-            - take a look at the debounce method that allows you to add a delay for the search in order to prevent
-              useless calls to the server.
-            - at first I display posts on the explore page, 9 at at a time(posts are coming from useGetInfinitePosts())
-            - then I implement the search functionality inside SearchResults.tsx
+            2. Implement Grid List and search functionality to explore page
+                - take a look at the debounce method that allows you to add a delay for the search in order to prevent
+                  useless calls to the server.
+                - at first I display posts on the explore page, 9 at at a time(posts are coming from useGetInfinitePosts())
+                - then I implement the search functionality inside SearchResults.tsx
+
+            3. Implement infinite scroll
+                - install react-intersection-observer -> gives me access to useInView, that it's used 
+                  to monitor elements easier, in my case, the `ref` at the bottom of Explorer page
+                
